@@ -1,0 +1,53 @@
+package com.android.slider.fragments;
+
+import com.android.slider.R;
+import com.android.slider.utils.Prefs;
+
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceFragment;
+
+
+
+public class PrefsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener{
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Load the preferences from an XML resource
+        addPreferencesFromResource(R.xml.preferences);
+    }
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+			String key) {
+        if (key.equals(getString(R.string.source_list_preference)))
+        {
+        	ListPreference lp = (ListPreference) findPreference(key);
+        	Prefs prefs = new Prefs(getActivity());
+        	prefs.saveResourcePref(Integer.parseInt((String) lp.getValue()));
+//            lp.setSummary("dummy"); // required or will not update
+//            lp.setSummary(getString(R.string.pref_yourKey) + ": %s");
+            // Set summary to be the user-description for the selected value
+//            Preference exercisesPref = findPreference(key);
+//            exercisesPref.setSummary(sharedPreferences.getString(key, ""));
+        }
+	}
+	
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+
+	}
+
+	@Override
+	public void onPause() {
+	    getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+	    super.onPause();
+	}
+}

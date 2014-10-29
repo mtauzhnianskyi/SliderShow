@@ -1,0 +1,24 @@
+package com.android.slider.utils;
+
+import android.content.Context;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+
+public class AnimationUtil {
+	
+	private ImageView imageView;
+	
+	Animation anim_out;
+	
+	Animation anim_in;
+	
+	public AnimationUtil(Context context, ImageView image){
+		imageView = image;
+		anim_out = AnimationUtils.loadAnimation(context, android.R.anim.fade_out); 
+	    final Animation anim_in  = AnimationUtils.loadAnimation(context, android.R.anim.fade_in); 
+	}
+	
+	
+
+}

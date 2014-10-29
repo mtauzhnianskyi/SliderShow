@@ -1,0 +1,145 @@
+package com.android.slider.utils;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Random;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.widget.ImageView;
+
+public class HTTPDataSlider implements Runnable {
+
+	public static final String WEB_SOURCE_SITE = "http://tn.new.fishki.net/26/upload/post/201410/27/1320795/";
+
+	// "http://fishki.net/demotivation/1320795-demotivatory/1212380-photo.html/gallery-1212380/"
+
+	private ImageView imageView1;
+
+	private ImageView imageView2;
+
+	private boolean isPortraitMode = false;
+
+	private Handler handler;
+
+	private Context context;
+
+	public HTTPDataSlider(Context context, Handler handler,
+			ImageView... imageViews) {
+		this.handler = handler;
+		this.context = context;
+		if (imageViews.length == 1) {
+			isPortraitMode = false;
+			imageView1 = imageViews[0];
+		} else {
+			isPortraitMode = true;
+			imageView1 = imageViews[0];
+			imageView2 = imageViews[1];
+		}
+	}
+
+	@Override
+	public void run() {
+
+		if (!isPortraitMode) {
+			imageView1.setTag(generateRandomNumberOfURIImage());
+			new DownloadImagesUtil().execute(imageView1);
+//			URL url = null;
+//			try {
+//				url = new URL(generateRandomNumberOfURIImage());
+//			} catch (MalformedURLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			Bitmap bmp = null;
+//			try {
+//				bmp = BitmapFactory.decodeStream(url.openConnection()
+//						.getInputStream());
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			imageView1.setImageBitmap(bmp);
+		} else {
+			imageView1.setTag(generateRandomNumberOfURIImage());
+			new DownloadImagesUtil().execute(imageView1);
+			imageView2.setTag(generateRandomNumberOfURIImage());
+			new DownloadImagesUtil().execute(imageView2);
+			//imageView1.setImageBitmap(bmp);
+//			Thread thread = new Thread(new Runnable() {
+//
+//				@Override
+//				public void run() {
+//					// TODO Auto-generated method stub
+//					handler.post(new Runnable() {
+//
+//						@Override
+//						public void run() {
+//							URL url = null;
+//							try {
+//								url = new URL(generateRandomNumberOfURIImage());
+//							} catch (MalformedURLException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							Bitmap bmp = null;
+//							try {
+//								bmp = BitmapFactory.decodeStream(url
+//										.openConnection().getInputStream());
+//							} catch (IOException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//
+//							// TODO Auto-generated method stub
+//							imageView1.setImageBitmap(bmp);
+//						}
+//					});
+//					handler.post(new Runnable() {
+//
+//						@Override
+//						public void run() {
+//							URL url2 = null;
+//							try {
+//								url2 = new URL(generateRandomNumberOfURIImage());
+//							} catch (MalformedURLException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							Bitmap bmp2 = null;
+//							try {
+//								bmp2 = BitmapFactory.decodeStream(url2
+//										.openConnection().getInputStream());
+//							} catch (IOException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							imageView2.setImageBitmap(bmp2);
+//						}
+//					});
+//
+//				}
+//			});
+//			thread.start();
+		}
+		//handler.postDelayed(this, 2000);
+	}
+
+	private String generateRandomNumberOfURIImage() {
+		Random r = new Random();
+		int randomImageNum = r.nextInt(100 - 80) + 65;
+		StringBuilder sb = new StringBuilder();
+		sb.append(WEB_SOURCE_SITE);
+		//sb.append("12123");
+		sb.append(randomImageNum);
+		sb.append("-photo.html/gallery-");
+		sb.append("12123");
+		sb.append(randomImageNum);
+		sb.append("/");
+		return sb.toString();
+	}
+
+}

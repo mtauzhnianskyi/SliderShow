@@ -1,0 +1,10 @@
+package com.android.slider.utils;
+
+import android.content.Context;
+
+public class InternetConnectionUtil {
+
+	public static boolean isInternetConnection(Context context){
+		
+	}
+}

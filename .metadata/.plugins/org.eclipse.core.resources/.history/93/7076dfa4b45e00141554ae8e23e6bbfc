@@ -1,0 +1,5 @@
+package com.android.slider.utils;
+
+public class MyThreeClickListener {
+
+}

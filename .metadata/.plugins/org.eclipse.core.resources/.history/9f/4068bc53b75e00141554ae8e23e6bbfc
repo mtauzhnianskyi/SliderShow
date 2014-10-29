@@ -1,0 +1,8 @@
+package com.android.slider.utils;
+
+public class MyThreeClickListener {
+	
+	
+	static final int CLICKABLE = 0x00005000;
+
+}

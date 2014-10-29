@@ -1,0 +1,19 @@
+package com.android.slider.utils;
+
+public class HttpURLGeneratorUtil {
+	
+	// http resource is hardcoded 
+	// TODO: implement feature to make user possible to set URL
+	public static final String WEB_SOURCE_SITE = "http://tn.new.fishki.net/26/upload/post/201410/27/1320795/";
+
+	private String webSourceSite = WEB_SOURCE_SITE;
+
+	public String getWebSourceSite() {
+		return webSourceSite;
+	}
+
+	public void setWebSourceSite(String webSourceSite) {
+		this.webSourceSite = webSourceSite;
+	}
+
+}

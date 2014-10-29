@@ -1,0 +1,105 @@
+package com.android.slider.utils;
+
+import com.android.slider.R;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Handler;
+import android.provider.MediaStore;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+public class ExternalDataSlider implements Runnable{
+	
+	private ImageView imageView1;
+	
+	private ImageView imageView2;
+	
+	private boolean isPortraitMode = false;
+	
+	private Handler handler;
+	
+	private Cursor cursor;
+	
+	private Context context;
+	
+	public ExternalDataSlider(Context context, Handler handler, ImageView ... imageViews ) {
+		this.handler = handler;
+		this.context = context;
+		if (imageViews.length == 1){
+			isPortraitMode = false;
+			imageView1 = imageViews[0];
+		}else{
+			isPortraitMode = true;
+			imageView1 = imageViews[0];
+			imageView2 = imageViews[1];
+		}
+		String[] STAR = { "*" };     
+		Uri allImages = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+		
+		cursor = context.getContentResolver().query(allImages, STAR, null, null, null);
+
+	}
+
+	@Override
+	public void run() {
+		if (cursor != null) {
+			if (!isPortraitMode) {
+				if (cursor.moveToNext() || cursor.moveToFirst()) {
+					String fullpath = cursor.getString(cursor
+							.getColumnIndex(MediaStore.Images.Media.DATA));
+					System.out.println("Audio Song FullPath= " + fullpath);
+					imageView1.setVisibility(View.VISIBLE);
+					imageView1.setImageBitmap(BitmapFactory
+							.decodeFile(fullpath));
+				}
+			} else {
+				if (cursor.moveToNext() || cursor.moveToFirst()) {
+					String fullpath = cursor.getString(cursor
+							.getColumnIndex(MediaStore.Images.Media.DATA));
+					System.out.println("Audio Song FullPath= " + fullpath);
+					imageView1.setVisibility(View.VISIBLE);
+					Bitmap bitmap = BitmapFactory.decodeFile(fullpath)
+					imageView1.setImageBitmap();
+					if (cursor.moveToNext()) {
+						String fullpath2 = cursor.getString(cursor
+								.getColumnIndex(MediaStore.Images.Media.DATA));
+						System.out.println("Audio Song FullPath= " + fullpath2);
+						imageView2.setVisibility(View.VISIBLE);
+						imageView2.setImageBitmap(BitmapFactory
+								.decodeFile(fullpath2));
+					}
+				}
+			}
+			handler.postDelayed(this, Prefs.getInstance(context).retrieveDurationlidingPref());
+		}
+		else{
+			handler.post(new Runnable() {
+				
+				@Override
+				public void run() {
+					Toast.makeText(context, context.getResources().getString(R.string.no_galery_photos), Toast.LENGTH_LONG).show();
+				}
+			});
+		}
+		
+	}
+	public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+	    int width = bm.getWidth();
+	    int height = bm.getHeight();
+	    float scaleWidth = ((float) newWidth) / width;
+	    float scaleHeight = ((float) newHeight) / height;
+	    // CREATE A MATRIX FOR THE MANIPULATION
+	    Matrix matrix = new Matrix();
+	    // RESIZE THE BIT MAP
+	    matrix.postScale(scaleWidth, scaleHeight);
+
+	    // "RECREATE" THE NEW BITMAP
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+	    return resizedBitmap;
+	}
+}

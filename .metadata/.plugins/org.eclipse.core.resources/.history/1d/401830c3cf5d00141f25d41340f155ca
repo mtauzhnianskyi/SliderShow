@@ -1,0 +1,16 @@
+package com.android.slider.utils;
+
+import android.widget.ImageView;
+
+public class InternalDataSlider implements Runnable{
+
+	private ImageView imageView1;
+	
+	private ImageView imageView2;
+	
+	@Override
+	public void run() {
+		
+	}
+
+}

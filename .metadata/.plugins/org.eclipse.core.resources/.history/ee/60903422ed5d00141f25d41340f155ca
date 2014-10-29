@@ -1,0 +1,120 @@
+package com.android.slider.utils;
+
+import java.io.BufferedInputStream;
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Random;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.BufferedHttpEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.ImageView;
+
+public class DownloadImagesUtil extends AsyncTask<ImageView, Void, Bitmap>{
+	static final int BUFFER_SIZE = 128 * 1024;
+	ImageView imageView = null;
+	
+	@Override
+	protected Bitmap doInBackground(ImageView... params) {
+		
+		imageView = params[0];
+		URL url = null;
+		try {
+			url = new URL((String)params[0].getTag());
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		Bitmap bmp = null;
+		bmp = DownloadImage("http://www.gophoto.it/view.php?i=http://1.bp.blogspot.com/-2LTvCCufBKc/T3L3KgcTj2I/AAAAAAAABbQ/Ki60e1LU9sE/s1600/Sachin%2BTendulkar.png");
+		return bmp;
+	}
+
+	@Override
+	protected void onPostExecute(Bitmap result) {
+		// TODO Auto-generated method stub
+		super.onPostExecute(result);
+		imageView.setImageBitmap(result);
+	}
+
+    private InputStream OpenHttpConnection(String urlString) throws IOException {
+        InputStream in = null;
+        int response = -1;
+
+        URL url = new URL(urlString);
+        URLConnection conn = url.openConnection();
+
+        if (!(conn instanceof HttpURLConnection))
+            throw new IOException("Not an HTTP connection");
+
+        try {
+            HttpURLConnection httpConn = (HttpURLConnection) conn;
+            httpConn.setAllowUserInteraction(false);
+            httpConn.setInstanceFollowRedirects(true);
+            httpConn.setRequestMethod("GET");
+            httpConn.connect();
+            response = httpConn.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK) {
+                in = httpConn.getInputStream();
+            }
+        } catch (Exception ex) {
+            throw new IOException("Error connecting");
+        }
+        return in;
+    }
+
+    private Bitmap DownloadImage(String URL) {
+        Bitmap bitmap = null;
+        InputStream inputstream = null;
+        try {
+        	   
+
+        	    if (!inputstream.markSupported()) {
+        	        inputstream = new BufferedInputStream(inputstream, BUFFER_SIZE);
+        	    }
+        	    inputstream.mark(BUFFER_SIZE);
+        	    BitmapFactory.Options options = new BitmapFactory.Options();
+        	    options.inJustDecodeBounds = true;
+        	    // We give decodeStream a wrapped input stream so it doesn't
+        	    // mess with our mark (currently it sets a mark of 1024)
+        	    BitmapFactory.decodeStream(
+        	            new BufferedInputStream(inputstream), null, options);
+        	    options.inJustDecodeBounds = false;
+        	    try {
+        	        inputstream.reset();
+        	    } catch (IOException e) {
+        	        // BitmapFactory read more than we could buffer
+        	        // Re-open the stream
+        	        inputstream.close();
+        	        inputstream = openStream();
+        	    }
+        	    Bitmap bitmap = BitmapFactory.decodeStream(inputstream,
+        	            null, options);
+            //in = OpenHttpConnection(URL);
+            bitmap = BitmapFactory.decodeStream(in);
+            in.close();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        return bitmap;
+    }
+}

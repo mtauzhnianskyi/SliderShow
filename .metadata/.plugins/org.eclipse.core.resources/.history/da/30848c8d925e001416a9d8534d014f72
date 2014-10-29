@@ -1,0 +1,34 @@
+package com.android.slider.utils;
+
+import receivers.ApplicationReceiver;
+import android.app.AlarmManager;
+import android.content.Context;
+import android.content.Intent;
+
+public class AlarmUtil {
+	
+	public AlarmUtil(){
+		
+	}
+	
+	public void setupLaunchSliding() {
+		AlarmManager am = (AlarmManager) con
+	            .getSystemService(Context.ALARM_SERVICE);
+
+	    Date futureDate = new Date(new Date().getTime() + 86400000);
+
+
+	    futureDate.setHours(8);
+	    futureDate.setMinutes(0);
+	    futureDate.setSeconds(0);
+
+
+	    Intent intent = new Intent(con, ApplicationReceiver.class);
+
+	    PendingIntent sender = PendingIntent.getBroadcast(con, 0, intent,
+	            PendingIntent.FLAG_UPDATE_CURRENT);
+
+	    am.set(AlarmManager.RTC_WAKEUP, futureDate.getTimeInMillis(), sender); 
+	}
+
+}

@@ -1,0 +1,26 @@
+package com.android.slider.utils;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
+
+public class Prefs {
+	
+	public static final String PREFERENCES_APP_NAME = "MY_PREFS";
+	
+	private Prefs prefs; 
+
+	private SharedPreferences preferences;
+
+	public Prefs(Context context) {
+		preferences = context.getSharedPreferences(PREFERENCES_APP_NAME, context.MODE_WORLD_WRITEABLE);
+	}
+	
+	public Prefs getInstance(Context ctx){
+		if (prefs == null)
+			return new Prefs(ctx);
+		return prefs;
+	} 	
+
+	
+}

@@ -1,0 +1,81 @@
+package com.android.slider.utils;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Random;
+
+import com.android.slider.R;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+public class HTTPDataSlider implements Runnable {
+
+	public static final String WEB_SOURCE_SITE = "http://tn.new.fishki.net/26/upload/post/201410/27/1320795/";
+
+	private ImageView imageView1;
+
+	private ImageView imageView2;
+
+	private boolean isPortraitMode = false;
+
+	private Handler handler;
+
+	private Context context;
+
+	public HTTPDataSlider(Context context, Handler handler,
+			ImageView... imageViews) {
+		this.handler = handler;
+		this.context = context;
+		if (imageViews.length == 1) {
+			isPortraitMode = false;
+			imageView1 = imageViews[0];
+		} else {
+			isPortraitMode = true;
+			imageView1 = imageViews[0];
+			imageView2 = imageViews[1];
+		}
+	}
+
+	@Override
+	public void run() {
+		ConnectivityManager connMgr = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+			if (!isPortraitMode) {
+				imageView1.setTag(generateRandomNumberOfURIImage());
+				new DownloadImagesUtil(context, false).execute(imageView1);
+
+			} else {
+				imageView1.setTag(generateRandomNumberOfURIImage());
+				new DownloadImagesUtil(context, true).execute(imageView1);
+				imageView2.setTag(generateRandomNumberOfURIImage());
+				new DownloadImagesUtil(context, true).execute(imageView2);
+
+			}
+			handler.postDelayed(this, Prefs.getInstance(context)
+					.retrieveDurationlidingPref());
+		} else {
+			Toast.makeText(context, context.getResources().getString(R.string.no_internet_connect_msg), Toast.LENGTH_LONG).show();
+		}
+	}
+
+	private String generateRandomNumberOfURIImage() {
+		Random r = new Random();
+		int randomImageNum = r.nextInt(40 - 20) + 20;
+		StringBuilder sb = new StringBuilder();
+		sb.append(WEB_SOURCE_SITE);
+		sb.append(randomImageNum);
+		sb.append(".jpg");
+		return sb.toString();
+	}
+
+}

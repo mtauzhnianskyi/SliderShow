@@ -1,0 +1,12 @@
+package com.android.slider.utils;
+
+import android.content.Context;
+import android.os.Handler;
+import android.widget.ImageView;
+
+public abstract class BaseDataSlider {
+	
+	public BaseDataSlider(Context context, Handler handler, ImageView ... imageViews){
+		
+	}
+}

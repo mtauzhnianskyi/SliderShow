@@ -1,0 +1,53 @@
+package com.android.slider.utils;
+
+import java.io.File;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.webkit.MimeTypeMap;
+import android.widget.ImageView;
+
+public class InternalDataSlider implements Runnable{
+
+	private ImageView imageView1;
+	
+	private ImageView imageView2;
+	
+	private boolean isPortraitMode = false;
+	
+	private Handler handler;
+	
+	public InternalDataSlider(Context context, Handler handler, ImageView ... imageViews ){
+		this.handler = handler;
+		if (imageViews.length == 1){
+			isPortraitMode = false;
+			imageView1 = imageViews[0];
+		}else{
+			isPortraitMode = true;
+			imageView1 = imageViews[0];
+			imageView2 = imageViews[1];
+		}
+		String dir = context.getFilesDir().getAbsolutePath();
+		File folder = new File(dir);
+		File[] listOfFiles = folder.listFiles();
+
+		for (File file : listOfFiles) {
+		    if (file.isFile()) {
+		    	BitmapFactory.Options options = new BitmapFactory.Options();
+		    	options.inJustDecodeBounds = true;
+		    	Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+		    	if (options.outWidth != -1 && options.outHeight != -1) {
+		    	    
+		    	}
+		    }
+		}
+	}
+	
+	@Override
+	public void run() {
+		
+	}
+
+}

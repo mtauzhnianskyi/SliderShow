@@ -1,0 +1,89 @@
+package com.android.slider.utils;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.widget.ImageView;
+
+public class ExternalDataSlider extends TimerTask{
+	
+	private ImageView imageView1;
+	
+	private ImageView imageView2;
+	
+	private boolean isPortraitMode = false;
+	
+	private Timer timer;
+	
+	private Context context;
+	
+	public ExternalDataSlider(Context context, ImageView ... imageViews ) {
+		
+		this.context = context;
+		if (imageViews.length == 1){
+			isPortraitMode = false;
+			imageView1 = imageViews[0];
+		}else{
+			isPortraitMode = true;
+			imageView1 = imageViews[0];
+			imageView2 = imageViews[1];
+		}
+		
+	}
+
+	@Override
+	public void run() {
+		String[] STAR = { "*" };     
+		Uri allImages = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+		//String audioselection = MediaStore.Images.Media. + " != 0";
+		Cursor cursor;
+		cursor = ((Context) context).getContentResolver().query(allImages, STAR, null, null, null);
+
+		
+		if (cursor != null) {
+			if (orientation != 1){
+		    if (cursor.moveToFirst()) {
+		        do {
+		            String fullpath = cursor.getString(cursor
+		                    .getColumnIndex(MediaStore.Images.Media.DATA));
+		            System.out.println("Audio Song FullPath= "+fullpath);
+		            imageView.setImageBitmap(BitmapFactory.decodeFile(fullpath));
+		        } while (cursor.moveToNext());
+		        
+		    }		
+		    } else {
+			    if (cursor.moveToFirst()) {
+			        do {
+			            String fullpath = cursor.getString(cursor
+			                    .getColumnIndex(MediaStore.Images.Media.DATA));
+			            System.out.println("Audio Song FullPath= "+fullpath);
+			            imageView.setImageBitmap(BitmapFactory.decodeFile(fullpath));
+			            if (cursor.moveToNext()){
+				            String fullpath2 = cursor.getString(cursor
+				                    .getColumnIndex(MediaStore.Images.Media.DATA));
+				            System.out.println("Audio Song FullPath= "+fullpath2);
+				            imageView2.setImageBitmap(BitmapFactory.decodeFile(fullpath2));
+			            }
+			        } while (cursor.moveToNext());
+			        
+			    }
+		    }
+		}
+	}
+	
+	public void startTimer() {
+		timer = new Timer();
+		
+		
+	}
+	
+	private void initializeTimer() {
+		
+	}
+
+}

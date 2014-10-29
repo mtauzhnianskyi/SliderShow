@@ -1,0 +1,88 @@
+package com.android.slider.utils;
+
+import com.android.slider.R;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+
+public class AnimationUtil {
+	
+	private ImageView imageView;
+	
+	private Animation anim_out;
+	
+	private Animation anim_in;
+	
+	private int animeType;
+	
+	private Bitmap bitmap;
+	
+	private Context context;
+	
+	public AnimationUtil(Context context, ImageView image, Bitmap result){
+		this.context = context;
+		bitmap = result;
+		imageView = image;
+		Prefs prefs = new Prefs(context);
+		animeType = prefs.retrieveAnimationPref();
+	}
+	
+	public void doAnimation(){
+		imageView.setVisibility(View.VISIBLE);
+		switch (animeType) {
+		case 1:
+			imageView.setImageBitmap(bitmap);
+			break;
+		case 2:
+			anim_out = AnimationUtils.loadAnimation(context, R.anim.fadeout); 
+			anim_in  = AnimationUtils.loadAnimation(context, R.anim.fadein);
+			startAnimation(bitmap);
+			break;
+		case 3:
+			anim_out = AnimationUtils.loadAnimation(context, R.anim.left_to_right_out); 
+		    anim_in  = AnimationUtils.loadAnimation(context, R.anim.left_to_right_in);
+			startAnimation(bitmap);
+			break;
+		default:
+			
+			break;
+		}
+
+	}
+	
+	public void startAnimation(final Bitmap b) {
+		anim_in.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationStart(Animation animation) {}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {}
+			
+			@Override
+			public void onAnimationEnd(Animation animation) {}
+		});
+		anim_out.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationStart(Animation animation) {}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {}
+			
+			@Override
+			public void onAnimationEnd(Animation animation) {
+
+				imageView.setImageBitmap(b); 
+				imageView.startAnimation(anim_in);
+			}
+		});
+		imageView.startAnimation(anim_out);
+	}
+
+}

@@ -1,0 +1,22 @@
+package com.android.slider.utils;
+
+import android.os.Handler;
+import android.widget.ImageView;
+
+public class HTTPDataSlider implements Runnable{
+
+	private ImageView imageView1;
+	
+	private ImageView imageView2;
+	
+	private boolean isPortraitMode = false;
+	
+	private Handler handler;
+	
+	
+	@Override
+	public void run() {
+		
+	}
+
+}

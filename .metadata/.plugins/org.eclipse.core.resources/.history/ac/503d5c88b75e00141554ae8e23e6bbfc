@@ -1,0 +1,20 @@
+package com.android.slider.utils;
+
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+
+public class MyThreeClickListener implements OnTouchListener{
+	
+	private long lastTouchTime = -1;
+	//static final int CLICKABLE = 0x00005000;
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	//interface 
+
+}

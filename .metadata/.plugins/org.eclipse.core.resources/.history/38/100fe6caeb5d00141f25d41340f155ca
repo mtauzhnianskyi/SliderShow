@@ -1,0 +1,209 @@
+package com.android.slider.utils;
+
+import java.io.BufferedInputStream;
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Random;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.BufferedHttpEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.ImageView;
+
+public class DownloadImagesUtil extends AsyncTask<ImageView, Void, Bitmap>{
+
+	ImageView imageView = null;
+	//public static final String WEB_SOURCE_SITE = "http://fishki.net/demotivation/1320795-demotivatory/";
+	
+	@Override
+	protected Bitmap doInBackground(ImageView... params) {
+		
+		imageView = params[0];
+		URL url = null;
+		try {
+			url = new URL((String)params[0].getTag());
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+//		try {
+//			url = new URL(generateRandomNumberOfURIImage());
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		Bitmap bmp = null;
+		bmp = DownloadImage("http://www.gophoto.it/view.php?i=http://1.bp.blogspot.com/-2LTvCCufBKc/T3L3KgcTj2I/AAAAAAAABbQ/Ki60e1LU9sE/s1600/Sachin%2BTendulkar.png");
+//		
+//		bmp = DecodeBitmapSampleSize((String)params[0].getTag(), 48, 64);
+//		final BitmapFactory.Options options = new BitmapFactory.Options();
+//		options.inJustDecodeBounds = true; 
+//		BufferedInputStream buffer=new BufferedInputStream(is);
+//		BitmapFactory.decodeStream(buffer,null,options);
+//		buffer.reset();
+//
+//		    // Calculate inSampleSize
+//		options.inSampleSize = calculateInSampleSize(options, reqWidth,reqHeight);
+//
+//		    // Decode bitmap with inSampleSize set
+//		options.inJustDecodeBounds = false; 
+//		BitmapFactory.decodeStream(buffer,null,options);
+//	      try{
+//	            //URL ulrn = new URL(url);
+//	            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+//	            InputStream is = con.getInputStream();
+//	            bmp = BitmapFactory.decodeStream(is);
+//	            if (null != bmp)
+//	                return bmp;
+//
+//	            }catch(Exception e){}
+//        HttpClient client = new DefaultHttpClient();
+//        HttpGet request = new HttpGet((String)params[0].getTag());
+//        HttpResponse response;
+//        try {
+//            response = (HttpResponse)client.execute(request);           
+//            HttpEntity entity = response.getEntity();
+//            BufferedHttpEntity bufferedEntity = new BufferedHttpEntity(entity);
+//            InputStream inputStream = bufferedEntity.getContent();
+//            bmp = BitmapFactory.decodeStream(inputStream);
+//        } catch (ClientProtocolException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+		return bmp;
+	}
+//    public Bitmap DecodeBitmapSampleSize (String strURL, int reqWidth, int reqHeight) {
+//        //InputStream in = null;
+//        //Bitmap bmp = null;
+//        Bitmap image = null;
+//        InputStream in = null;
+//        try
+//            {
+//                in = new java.net.URL(strURL).openStream();
+//                BitmapFactory.Options opts = new BitmapFactory.Options();
+//                opts.inSampleSize = 2;
+//                image = BitmapFactory.decodeStream(new FlushedInputStream(in),null,opts);
+//                in.close();
+//            }
+//        catch (MalformedURLException e)
+//            {
+//                e.printStackTrace();
+//            }
+//        catch (IOException e)
+//            {
+//                e.printStackTrace();
+//            }
+//        return image;
+//    }
+//        HttpClient client = new DefaultHttpClient();
+//        HttpGet request = new HttpGet(strURL);
+//        HttpResponse response;
+//        try {
+//            response = (HttpResponse)client.execute(request);           
+//            HttpEntity entity = response.getEntity();
+//            BufferedHttpEntity bufferedEntity = new BufferedHttpEntity(entity);
+//            InputStream inputStream = bufferedEntity.getContent();
+//            bmp = BitmapFactory.decodeStream(inputStream);
+//        } catch (ClientProtocolException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        in = OpenHttpConnection(strURL);
+//        final BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inJustDecodeBounds = true;
+//        BufferedInputStream buffer=new BufferedInputStream(in);
+//        BitmapFactory.decodeStream(buffer, null, options);
+//        try {
+//			buffer.reset();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//        options.inSampleSize = calculateSampleSize(options, reqWidth, reqHeight);
+//
+//        options.inJustDecodeBounds = false;
+//        bmp = BitmapFactory.decodeStream(buffer, null, options);
+//                return bmp;
+
+	@Override
+	protected void onPostExecute(Bitmap result) {
+		// TODO Auto-generated method stub
+		super.onPostExecute(result);
+		imageView.setImageBitmap(result);
+	}
+//	private String generateRandomNumberOfURIImage() {
+//		Random r = new Random();
+//		int randomImageNum = r.nextInt(80 - 65) + 65;
+//		StringBuilder sb = new StringBuilder();
+//		sb.append(WEB_SOURCE_SITE);
+//		sb.append("12123");
+//		sb.append(randomImageNum);
+//		sb.append("-photo.html/gallery-");
+//		sb.append(randomImageNum);
+//		sb.append("/");
+//		return sb.toString();
+//	}
+    private InputStream OpenHttpConnection(String urlString) throws IOException {
+        InputStream in = null;
+        int response = -1;
+
+        URL url = new URL(urlString);
+        URLConnection conn = url.openConnection();
+
+        if (!(conn instanceof HttpURLConnection))
+            throw new IOException("Not an HTTP connection");
+
+        try {
+            HttpURLConnection httpConn = (HttpURLConnection) conn;
+            httpConn.setAllowUserInteraction(false);
+            httpConn.setInstanceFollowRedirects(true);
+            httpConn.setRequestMethod("GET");
+            httpConn.connect();
+            response = httpConn.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK) {
+                in = httpConn.getInputStream();
+            }
+        } catch (Exception ex) {
+            throw new IOException("Error connecting");
+        }
+        return in;
+    }
+
+    private Bitmap DownloadImage(String URL) {
+        Bitmap bitmap = null;
+        InputStream in = null;
+        try {
+            in = OpenHttpConnection(URL);
+            bitmap = BitmapFactory.decodeStream(in);
+            in.close();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        return bitmap;
+    }
+}

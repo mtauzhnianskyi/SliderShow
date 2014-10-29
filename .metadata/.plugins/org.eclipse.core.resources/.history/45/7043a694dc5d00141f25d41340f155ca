@@ -1,0 +1,39 @@
+package com.android.slider.utils;
+
+import android.content.Context;
+import android.os.Handler;
+import android.widget.ImageView;
+
+public class HTTPDataSlider implements Runnable{
+	
+	public static final String WEB_SOURCE_SITE = "http://fishki.net/demotivation/1320795-demotivatory/1212380-photo.html";
+
+	private ImageView imageView1;
+	
+	private ImageView imageView2;
+	
+	private boolean isPortraitMode = false;
+	
+	private Handler handler;
+	
+	private Context context;
+	
+	public HTTPDataSlider(Context context, Handler handler, ImageView ... imageViews ) {
+		this.handler = handler;
+		this.context = context;
+		if (imageViews.length == 1){
+			isPortraitMode = false;
+			imageView1 = imageViews[0];
+		}else{
+			isPortraitMode = true;
+			imageView1 = imageViews[0];
+			imageView2 = imageViews[1];
+		}
+	}
+		
+	@Override
+	public void run() {
+		
+	}
+
+}

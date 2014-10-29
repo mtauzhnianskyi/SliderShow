@@ -1,0 +1,72 @@
+package com.android.slider.utils;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
+
+public class Prefs {
+	
+	public static final String PREFERENCES_APP_NAME = "MY_PREFS";
+	
+	public static final String REBOOT_SLIDING = "reboot";
+	
+	public static final String CHARGING_SLIDING = "charging";
+	
+	public static final String RESOURCES = "resources_from";
+	
+	public static final String ANIMATION = "animation";
+	
+	private Prefs prefs; 
+
+	private SharedPreferences preferences;
+
+	public Prefs(Context context) {
+		preferences = context.getSharedPreferences(PREFERENCES_APP_NAME, context.MODE_WORLD_WRITEABLE);
+	}
+	
+	public Prefs getInstance(Context ctx){
+		if (prefs == null)
+			return new Prefs(ctx);
+		return prefs;
+	}
+
+	public void saveRebootSlidingPref(boolean doRebootSliding) {
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putBoolean(REBOOT_SLIDING, doRebootSliding);
+		editor.apply();
+	}
+	
+	public boolean retrieveRebootSlidingPref() {
+		return preferences.getBoolean(REBOOT_SLIDING, true);
+	}
+	
+	public void saveChargingSlidingPref(boolean doChargingSliding) {
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putBoolean(CHARGING_SLIDING, doChargingSliding);
+		editor.apply();
+	}
+	
+	public boolean retrieveChargingSlidingPref() {
+		return preferences.getBoolean(CHARGING_SLIDING, true);
+	}
+	
+	public void saveResourcePref(int resFrom) {
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putInt(RESOURCES, resFrom);
+		editor.apply();
+	}
+	
+	public int retrieveResourcePref() {
+		return preferences.getInt(RESOURCES, 1);
+	}
+	
+	public void saveAnimationPref(int resFrom) {
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putInt(ANIMATION, resFrom);
+		editor.apply();
+	}
+	
+	public int retrieveAnimationPref() {
+		return preferences.getInt(ANIMATION, 1);
+	}
+}

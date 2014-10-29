@@ -1,0 +1,98 @@
+package com.android.slider.utils;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
+
+public class Prefs {
+	
+	public static final String PREFERENCES_APP_NAME = "MY_PREFS";
+	
+	public static final String DURATION_SLIDING = "duration";
+	
+	public static final String REBOOT_SLIDING = "reboot";
+	
+	public static final String CHARGING_SLIDING = "charging";
+	
+	public static final String RESOURCES = "resources_from";
+	
+	public static final String ANIMATION = "animation";
+	
+	public static final String START_TIME = "start_time";
+	
+	public static final String STOP_TIME = "stop_time";
+	
+	private static Prefs prefs; 
+
+	private SharedPreferences preferences;
+
+	public Prefs(Context context) {
+		preferences = context.getSharedPreferences(PREFERENCES_APP_NAME, context.MODE_WORLD_WRITEABLE);
+	}
+	
+	public static Prefs getInstance(Context ctx){
+		if (prefs == null)
+			return new Prefs(ctx);
+		return prefs;
+	}
+
+	public void saveDurationSlidingPref(int durationSliding) {
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putInt(DURATION_SLIDING, durationSliding);
+		editor.apply();
+	}
+	
+	public int retrieveDurationlidingPref() {
+		return preferences.getInt(DURATION_SLIDING, 5);
+	}
+	
+	public void saveRebootSlidingPref(boolean doRebootSliding) {
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putBoolean(REBOOT_SLIDING, doRebootSliding);
+		editor.apply();
+	}
+	
+	public boolean retrieveRebootSlidingPref() {
+		return preferences.getBoolean(REBOOT_SLIDING, true);
+	}
+	
+	public void saveChargingSlidingPref(boolean doChargingSliding) {
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putBoolean(CHARGING_SLIDING, doChargingSliding);
+		editor.apply();
+	}
+	
+	public boolean retrieveChargingSlidingPref() {
+		return preferences.getBoolean(CHARGING_SLIDING, true);
+	}
+	
+	public void saveResourcePref(int resFrom) {
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putInt(RESOURCES, resFrom);
+		editor.apply();
+	}
+	
+	public int retrieveResourcePref() {
+		return preferences.getInt(RESOURCES, 1);
+	}
+	
+	public void saveAnimationPref(int animeStyle) {
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putInt(ANIMATION, animeStyle);
+		editor.apply();
+	}
+	
+	public int retrieveAnimationPref() {
+		return preferences.getInt(ANIMATION, 1);
+	}
+	
+	public void saveStartTimeSlidePref(String animeStyle) {
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putString(START_TIME, animeStyle);
+		editor.apply();
+	}
+	
+	public String retrieveStartTimeSlidePref() {
+		return preferences.getString(START_TIME, "00:00:00");
+	}
+}

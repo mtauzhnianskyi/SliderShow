@@ -1,0 +1,21 @@
+package com.android.slider.utils;
+
+import android.content.SharedPreferences;
+
+
+public class Prefs {
+	
+	private Prefs prefs; 
+
+	SharedPreferences preferences;
+
+	public Prefs() {
+	}
+	
+	public Prefs getInstance(){
+		if (prefs == null)
+			return new Prefs();
+		return prefs;
+	} 	
+
+}

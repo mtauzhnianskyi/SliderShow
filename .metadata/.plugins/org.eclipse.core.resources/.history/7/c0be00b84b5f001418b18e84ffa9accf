@@ -1,0 +1,87 @@
+package com.android.slider.utils;
+
+import com.android.slider.R;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+
+public class AnimationUtil {
+	
+	private ImageView imageView;
+	
+	private Animation anim_out;
+	
+	private Animation anim_in;
+	
+	int animeType;
+	
+	public AnimationUtil(Context context, ImageView image, Bitmap result){
+	//public AnimationUtil(Context context, ImageView image, boolean fadeinFlag){
+		imageView = image;
+		Prefs prefs = new Prefs(context);
+		int animeType = prefs.retrieveAnimationPref();
+		switch (animeType) {
+		case 1:
+			imageView.setImageBitmap(result);
+			break;
+		case 2:
+			anim_out = AnimationUtils.loadAnimation(context, R.anim.fadeout); 
+			anim_in  = AnimationUtils.loadAnimation(context, R.anim.fadein);
+			//AnimationUtil anim_util = new AnimationUtil(context, imageView, true);
+			startAnimation(result);
+			break;
+		case 3:
+			anim_out = AnimationUtils.loadAnimation(context, R.anim.left_to_right_out); 
+		    anim_in  = AnimationUtils.loadAnimation(context, R.anim.left_to_right_in);
+			//AnimationUtil anim_util2 = new AnimationUtil(context, imageView, false);
+			startAnimation(result);
+			break;
+		default:
+			imageView.setVisibility(View.VISIBLE);
+			break;
+		}
+//		if (fadeinFlag){
+//			anim_out = AnimationUtils.loadAnimation(context, R.anim.fadeout); 
+//			anim_in  = AnimationUtils.loadAnimation(context, R.anim.fadein);
+//		}else{
+//			anim_out = AnimationUtils.loadAnimation(context, R.anim.left_to_right_out); 
+//		    anim_in  = AnimationUtils.loadAnimation(context, R.anim.left_to_right_in);
+//		}
+
+	}
+	
+	public void startAnimation(final Bitmap b) {
+		anim_out.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationStart(Animation animation) {}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {}
+			
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				imageView.setImageBitmap(b); 
+				anim_in.setAnimationListener(new AnimationListener() {
+					
+					@Override
+					public void onAnimationStart(Animation animation) {}
+					
+					@Override
+					public void onAnimationRepeat(Animation animation) {}
+					
+					@Override
+					public void onAnimationEnd(Animation animation) {}
+				});
+				imageView.startAnimation(anim_in);
+			}
+		});
+		imageView.startAnimation(anim_out);
+	}
+
+}

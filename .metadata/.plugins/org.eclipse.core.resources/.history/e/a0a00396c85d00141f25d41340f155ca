@@ -1,0 +1,27 @@
+package com.android.slider.utils;
+
+import java.util.TimerTask;
+
+import android.widget.ImageView;
+
+public class ExternalDataSlider extends TimerTask{
+	
+	private ImageView imageView1;
+	
+	private ImageView imageView2;
+	
+	public ExternalDataSlider(ImageView ... imageViews ) {
+		if (imageViews.length == 1){
+			imageView1 = imageViews[0];
+		}else{
+			imageView1 = imageViews[0];
+			imageView2 = imageViews[1];
+		}
+	}
+
+	@Override
+	public void run() {
+		
+	}
+
+}

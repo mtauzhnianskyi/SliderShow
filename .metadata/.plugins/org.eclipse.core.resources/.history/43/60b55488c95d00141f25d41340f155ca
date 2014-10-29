@@ -1,0 +1,35 @@
+package com.android.slider.utils;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import android.widget.ImageView;
+
+public class ExternalDataSlider extends TimerTask{
+	
+	private ImageView imageView1;
+	
+	private ImageView imageView2;
+	
+	private boolean isPortraitMode = false;
+	
+	private Timer timer;
+	
+	public ExternalDataSlider(ImageView ... imageViews ) {
+		if (imageViews.length == 1){
+			isPortraitMode = false;
+			imageView1 = imageViews[0];
+		}else{
+			isPortraitMode = true;
+			imageView1 = imageViews[0];
+			imageView2 = imageViews[1];
+		}
+		timer = new Timer();
+	}
+
+	@Override
+	public void run() {
+		
+	}
+
+}

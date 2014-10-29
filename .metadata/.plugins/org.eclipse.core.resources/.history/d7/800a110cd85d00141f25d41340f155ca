@@ -1,0 +1,83 @@
+package com.android.slider.utils;
+
+import com.android.slider.R;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Handler;
+import android.provider.MediaStore;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+public class ExternalDataSlider implements Runnable{
+	
+	private ImageView imageView1;
+	
+	private ImageView imageView2;
+	
+	private boolean isPortraitMode = false;
+	
+	private Handler handler;
+	
+	private Cursor cursor;
+	
+	public ExternalDataSlider(Context context, Handler handler, ImageView ... imageViews ) {
+		this.handler = handler;
+		if (imageViews.length == 1){
+			isPortraitMode = false;
+			imageView1 = imageViews[0];
+		}else{
+			isPortraitMode = true;
+			imageView1 = imageViews[0];
+			imageView2 = imageViews[1];
+		}
+		String[] STAR = { "*" };     
+		Uri allImages = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+		
+		cursor = context.getContentResolver().query(allImages, STAR, null, null, null);
+
+	}
+
+	@Override
+	public void run() {
+		if (cursor != null) {
+			if (!isPortraitMode) {
+				if (cursor.moveToNext() || cursor.moveToFirst()) {
+					String fullpath = cursor.getString(cursor
+							.getColumnIndex(MediaStore.Images.Media.DATA));
+					System.out.println("Audio Song FullPath= " + fullpath);
+					imageView1.setImageBitmap(BitmapFactory
+							.decodeFile(fullpath));
+				}
+			} else {
+				if (cursor.moveToNext() || cursor.moveToFirst()) {
+					String fullpath = cursor.getString(cursor
+							.getColumnIndex(MediaStore.Images.Media.DATA));
+					System.out.println("Audio Song FullPath= " + fullpath);
+					imageView1.setImageBitmap(BitmapFactory
+							.decodeFile(fullpath));
+					if (cursor.moveToNext()) {
+						String fullpath2 = cursor.getString(cursor
+								.getColumnIndex(MediaStore.Images.Media.DATA));
+						System.out.println("Audio Song FullPath= " + fullpath2);
+						imageView2.setImageBitmap(BitmapFactory
+								.decodeFile(fullpath2));
+					}
+				}
+			}
+			handler.postDelayed(this, 1000);
+		}
+		else{
+			handler.post(new Runnable() {
+				
+				@Override
+				public void run() {
+					Toast.makeText(context, context.getResources().getString(R.id.no_local_photos), Toast.LENGTH_LONG).show();
+				}
+			});
+		}
+		
+	}
+}

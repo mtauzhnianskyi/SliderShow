@@ -1,0 +1,45 @@
+package com.android.slider.utils;
+
+
+import java.util.Date;
+
+import receivers.ApplicationReceiver;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
+public class AlarmUtil {
+	
+	private Context context;
+	
+	public AlarmUtil(Context context){
+		this.context = context;
+	}
+	
+	public void setupLaunchSliding(int h, int m, int s) {
+		AlarmManager am = (AlarmManager) context
+	            .getSystemService(Context.ALARM_SERVICE);
+
+	    Date futureDate = new Date(new Date().getTime() + 86400000);
+
+
+	    futureDate.setHours(h);
+	    futureDate.setMinutes(m);
+	    futureDate.setSeconds(s);
+
+
+	    Intent intent = new Intent(context, ApplicationReceiver.class);
+
+	    PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent,
+	            PendingIntent.FLAG_UPDATE_CURRENT);
+
+	    am.set(AlarmManager.RTC_WAKEUP,  futureDate.getTime(), sender); 
+	}
+	
+	private Date parseSlideShowTime(String str) {
+        DateFormat df = new SimpleDateFormat("kk:mm:ss");
+        Date result =  df.parse(target);
+	}
+
+}

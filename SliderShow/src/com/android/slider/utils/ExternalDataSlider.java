@@ -1,0 +1,63 @@
+package com.android.slider.utils;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Handler;
+import android.provider.MediaStore;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.android.slider.R;
+
+public class ExternalDataSlider extends BaseDataSlider{
+	
+	private Cursor cursor;
+	
+	public ExternalDataSlider(Context context, Handler handler, ImageView ... imageViews ) {
+		
+		super(context, handler, imageViews);
+		String[] STAR = { "*" };     
+		Uri allImages = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+		
+		cursor = context.getContentResolver().query(allImages, STAR, null, null, null);
+
+	}
+
+	@Override
+	public void run() {
+
+		if (cursor != null) {
+			if (!isPortraitMode) {
+				if (cursor.moveToNext() || cursor.moveToFirst()) {
+					String fullpath = cursor.getString(cursor
+							.getColumnIndex(MediaStore.Images.Media.DATA));
+					System.out.println("Audio Song FullPath= " + fullpath);
+					new AnimationUtil(context, imageView1, new ImageUtil(context).getResizedBitmapFromPath(fullpath, false)).doAnimation();
+				}
+			} else {
+				if (cursor.moveToNext() || cursor.moveToFirst()) {
+					String fullpath = cursor.getString(cursor
+							.getColumnIndex(MediaStore.Images.Media.DATA));
+					System.out.println("Audio Song FullPath= " + fullpath);
+					new AnimationUtil(context, imageView1, new ImageUtil(context).getResizedBitmapFromPath(fullpath, true)).doAnimation();
+					if (cursor.moveToNext()) {
+						String fullpath2 = cursor.getString(cursor
+								.getColumnIndex(MediaStore.Images.Media.DATA));
+						new AnimationUtil(context, imageView2, new ImageUtil(context).getResizedBitmapFromPath(fullpath2, true)).doAnimation();
+					}
+				}
+			}
+			handler.postDelayed(this, Prefs.getInstance(context).retrieveDurationlidingPref());
+		}
+		else{
+			handler.post(new Runnable() {
+				
+				@Override
+				public void run() {
+					Toast.makeText(context, context.getResources().getString(R.string.no_galery_photos), Toast.LENGTH_LONG).show();
+				}
+			});
+		}
+	}
+}

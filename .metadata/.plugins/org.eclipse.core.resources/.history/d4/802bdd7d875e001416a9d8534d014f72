@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SliderShow</string>
+    <string name="title_section1">SlideShow</string>
+    <string name="title_section2">Setting</string>
+    <string name="title_section3">About App</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="start_slide_show_desc">Please, press Start show button to start sliding</string>
+    
+    
+    <string name="slide_show_preferences">Slide show</string>
+    <string name="reboot_checkbox_preference">On/Off reboot sliding</string>
+    <string name="reboot_summary_checkbox_preference">Automatic start after rebooting a device</string>
+    
+    <string name="charging_checkbox_preference">On/Off device charging sliding</string>
+    <string name="charging_summary_checkbox_preference">Automatic start during device charging</string>
+    
+    <string name="interval_edittext_preference">Sliding interval</string>
+    <string name="interval_summary_edittext_preference">Please, set a slide change interval</string>
+    <string name="interval_dialog_title_edittext_preference">Please, use from 1 to 60 seconds</string>
+    
+    
+    <string name="source_preferences">resources</string>
+    <string name="source_list_preference">source_list_preference</string>
+    <string name="source_title_list_preference">Use images</string>
+    <string name="source_summary_list_preference">Select browse to use resources</string>
+    <string name="source_dialog_title_list_preference">Choose one provider</string>
+    
+    <string name="source_preferences">animation</string>
+    <string name="source_list_preference">animation_list_preference</string>
+    <string name="source_title_list_preference">Apply animation</string>
+    <string name="source_summary_list_preference">Select browse to animate slide show</string>
+    <string name="source_dialog_title_list_preference">Choose an animation</string>
+    
+    <string name="schedule_preference_attributes">Schedule slide show</string>
+    <string name="using_schedule_parent_preference">On/Off scheduler</string>
+    <string name="schedule_summary_parent_preference">Start sliding in user specified time</string>
+    
+    <string name="start_time_title_child_preference">Slide show start time</string>
+    <string name="start_time_summary_child_preference">Set the time to start slide show</string>
+    <string name="start_time_dialog_title_edittext_preference">Please set start time (example hh:mm:ss)</string>
+    <string name="end_time_title_child_preference">Slide show stop time</string>
+    <string name="end_time_summary_child_preference">Set the time to stop slide show</string>
+    <string name="stop_time_dialog_title_edittext_preference">Please set stop time (example hh:mm:ss)</string>
+    
+    <string name="start_sliding">Start</string>
+    <string name="stop_sliding">Stop</string>
+    <string name="stop_sliding_desc">To Stop Sliding 3 Times Tap on Screen </string>
+    <string name="settings">Settings</string>
+    
+    <string name="no_local_photos">No photos in the local directory. Please, change the sources for images</string>
+    <string name="no_galery_photos">No photos in the galery. Please, change the sources for images</string>
+    
+</resources>

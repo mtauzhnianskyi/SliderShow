@@ -1,0 +1,56 @@
+package com.android.slider.utils;
+
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.android.slider.receivers.ApplicationReceiver;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
+public class AlarmUtil {
+	
+	private Context context;
+	
+	public AlarmUtil(Context context){
+		this.context = context;
+	}
+	
+	public void setupLaunchSliding(String time) {
+		AlarmManager am = (AlarmManager) context
+	            .getSystemService(Context.ALARM_SERVICE);
+
+	    Date futureDate = new Date(new Date().getTime() + 86400000);
+	    Date future = null;
+		try {
+			future = parseSlideShowTime(time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+	    futureDate.setHours(future.getHours());
+	    futureDate.setMinutes(future.getMinutes());
+	    futureDate.setSeconds(future.getSeconds());
+
+
+	    Intent intent = new Intent(context, ApplicationReceiver.class);
+	    intent.setAction("com.android.slider.START");
+
+	    PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent,
+	            PendingIntent.FLAG_UPDATE_CURRENT);
+
+	    am.set(AlarmManager.RTC_WAKEUP, futureDate.getTime(), sender); 
+	}
+	
+	private Date parseSlideShowTime(String str) throws ParseException {
+        DateFormat df = new SimpleDateFormat("kk:mm:ss");
+        Date result =  df.parse(str);
+        return result;
+	}
+
+}

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <PreferenceCategory
+            android:title="@string/slide_show_preferences">
+        <EditTextPreference
+                android:key="@string/sliding_interval_edittext_preference"
+                android:title="@string/interval_edittext_preference"
+                android:defaultValue="5"
+                android:maxLength="2"
+                android:numeric="integer"
+                android:summary="@string/interval_summary_edittext_preference"
+                android:dialogTitle="@string/interval_dialog_title_edittext_preference" />
+        <CheckBoxPreference
+                android:key="rebbot_checkbox_preference"
+                android:title="@string/reboot_checkbox_preference"
+                android:summary="@string/reboot_summary_checkbox_preference" />
+        <CheckBoxPreference
+                android:key="charging_checkbox_preference"
+                android:title="@string/charging_checkbox_preference"
+                android:summary="@string/charging_summary_checkbox_preference" />
+        
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="@string/source_preferences">
+
+        <ListPreference
+                android:key="@string/source_list_preference"
+                android:title="@string/source_title_list_preference"
+                android:summary="@string/source_summary_list_preference"
+                android:entries="@array/entries_list_preference"
+                android:entryValues="@array/entryvalues_list_preference"
+                
+                android:dialogTitle="@string/source_dialog_title_list_preference" />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="@string/animation_preferences">
+
+        <ListPreference
+                android:key="@string/animation_list_preference"
+                android:title="@string/animation_title_list_preference"
+                android:summary="@string/animation_summary_list_preference"
+                android:entries="@array/animation_entries_list_preference"
+                android:entryValues="@array/animation_entryvalues_list_preference"
+                
+                android:dialogTitle="@string/animation_dialog_title_list_preference" />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="@string/schedule_preference_attributes">
+
+        <CheckBoxPreference
+                android:key="using_scheduler_checkbox_preference"
+                android:title="@string/using_schedule_parent_preference"
+                android:summary="@string/schedule_summary_parent_preference" />
+
+        <!-- The visual style of a child is defined by this styled theme attribute. -->
+        
+
+       <EditTextPreference
+                android:key="@string/start_time_edittext_preference"
+                android:title="@string/start_time_title_child_preference"
+                android:dependency="using_scheduler_checkbox_preference"
+                android:layout="?android:attr/preferenceLayoutChild"
+                android:summary="@string/start_time_summary_child_preference"
+                android:inputType="date"
+                android:dialogTitle="@string/start_time_dialog_title_edittext_preference" />
+        
+        <EditTextPreference
+                android:key="@string/end_time_edittext_preference"
+                android:title="@string/end_time_title_child_preference"
+                android:dependency="@string/start_time_edittext_preference"
+                android:layout="?android:attr/preferenceLayoutChild"
+                android:inputType="date"
+                android:summary="@string/end_time_summary_child_preference"
+                android:dialogTitle="@string/stop_time_dialog_title_edittext_preference" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

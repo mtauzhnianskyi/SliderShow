@@ -1,0 +1,34 @@
+package com.android.slider.utils;
+
+import android.content.Context;
+import android.os.Handler;
+import android.widget.ImageView;
+
+public class InternalDataSlider implements Runnable{
+
+	private ImageView imageView1;
+	
+	private ImageView imageView2;
+	
+	private boolean isPortraitMode = false;
+	
+	private Handler handler;
+	
+	public InternalDataSlider(Context context, Handler handler, ImageView ... imageViews ){
+		this.handler = handler;
+		if (imageViews.length == 1){
+			isPortraitMode = false;
+			imageView1 = imageViews[0];
+		}else{
+			isPortraitMode = true;
+			imageView1 = imageViews[0];
+			imageView2 = imageViews[1];
+		}
+	}
+	
+	@Override
+	public void run() {
+		
+	}
+
+}

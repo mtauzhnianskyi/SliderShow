@@ -1,0 +1,56 @@
+package com.android.slider.utils;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.WindowManager;
+
+public class ImageUtil {
+	
+	private Context context;
+	
+	private int width;
+	
+	private int height;
+	
+	public ImageUtil(Context context){
+		this.context = context;
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+	    Display display = wm.getDefaultDisplay();
+	    DisplayMetrics metrics = new DisplayMetrics();
+	    display.getMetrics(metrics);
+	    width = metrics.widthPixels;
+	    height = metrics.heightPixels;
+	}
+	
+	public Bitmap getBitmap(String imagePath) {
+
+	    Bitmap resizedBitmap = BitmapFactory.decodeFile(imagePath);
+	    return resizedBitmap;
+	}
+	
+	public Bitmap getResizedBitmapFromPath(String imagePath) {
+		Bitmap resizedBitmap = getBitmap(imagePath);
+		resizedBitmap = getResizedBitmap(resizedBitmap, height, width);
+	    return resizedBitmap;
+	}
+	
+	public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+	    int width = bm.getWidth();
+	    int height = bm.getHeight();
+	    float scaleWidth = ((float) newWidth) / width;
+	    float scaleHeight = ((float) newHeight) / height;
+	    // CREATE A MATRIX FOR THE MANIPULATION
+	    Matrix matrix = new Matrix();
+	    // RESIZE THE BIT MAP
+	    matrix.postScale(scaleWidth, scaleHeight);
+
+	    // "RECREATE" THE NEW BITMAP
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+	    return resizedBitmap;
+	}
+
+}
