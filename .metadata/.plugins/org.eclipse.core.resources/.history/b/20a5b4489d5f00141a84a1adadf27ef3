@@ -65,6 +65,8 @@ public class PrefsFragment extends PreferenceFragment implements OnSharedPrefere
         	pref.setSummary(timeIncome);
         	AlarmUtil alarm = new AlarmUtil(getActivity());
         	alarm.setupLaunchSliding(timeIncome);
+//        	Prefs prefs = new Prefs(getActivity());
+//        	prefs.saveStartTimeSlidePref(sharedPreferences.getString(key, "00:00:00"));
         }
         if (key.equals(getString(R.string.end_time_edittext_preference)))
         {
@@ -73,6 +75,8 @@ public class PrefsFragment extends PreferenceFragment implements OnSharedPrefere
         	pref.setSummary(timeIncome);
         	AlarmUtil alarm = new AlarmUtil(getActivity());
         	alarm.setupStopSliding(timeIncome);
+//        	Prefs prefs = new Prefs(getActivity());
+//        	prefs.saveStopTimeSlidePref(sharedPreferences.getString(key, "00:00:00"));
         }
         
 	}

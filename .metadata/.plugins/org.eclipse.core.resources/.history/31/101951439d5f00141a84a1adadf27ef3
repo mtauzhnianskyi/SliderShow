@@ -1,15 +1,19 @@
 package com.android.slider.fragments;
 
+import com.android.slider.R;
+import com.android.slider.utils.AlarmUtil;
+import com.android.slider.utils.Prefs;
+
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-
-import com.android.slider.R;
-import com.android.slider.utils.AlarmUtil;
-import com.android.slider.utils.Prefs;
+import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 
 
@@ -65,6 +69,8 @@ public class PrefsFragment extends PreferenceFragment implements OnSharedPrefere
         	pref.setSummary(timeIncome);
         	AlarmUtil alarm = new AlarmUtil(getActivity());
         	alarm.setupLaunchSliding(timeIncome);
+//        	Prefs prefs = new Prefs(getActivity());
+//        	prefs.saveStartTimeSlidePref(sharedPreferences.getString(key, "00:00:00"));
         }
         if (key.equals(getString(R.string.end_time_edittext_preference)))
         {
@@ -73,6 +79,8 @@ public class PrefsFragment extends PreferenceFragment implements OnSharedPrefere
         	pref.setSummary(timeIncome);
         	AlarmUtil alarm = new AlarmUtil(getActivity());
         	alarm.setupStopSliding(timeIncome);
+//        	Prefs prefs = new Prefs(getActivity());
+//        	prefs.saveStopTimeSlidePref(sharedPreferences.getString(key, "00:00:00"));
         }
         
 	}

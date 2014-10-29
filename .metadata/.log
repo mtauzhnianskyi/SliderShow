@@ -3775,3 +3775,43 @@ Binding(CTRL+SHIFT+\,
 
 !ENTRY org.eclipse.ui 4 4 2014-10-29 13:00:54.030
 !MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.reload.dependencies
+!SESSION 2014-10-29 15:16:36.188 -----------------------------------------------
+eclipse.buildId=4.3.2.M20140221-1700
+java.version=1.7.0_71
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY org.eclipse.core.resources 2 10035 2014-10-29 15:17:12.763
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.core.jobs 4 2 2014-10-29 15:18:33.145
+!MESSAGE An internal error occurred during: "Launching SliderShow".
+!STACK 0
+org.eclipse.core.runtime.AssertionFailedException: assertion failed: 
+	at org.eclipse.core.runtime.Assert.isTrue(Assert.java:110)
+	at org.eclipse.core.runtime.Assert.isTrue(Assert.java:96)
+	at org.eclipse.core.internal.events.BuildCommand.addBuilder(BuildCommand.java:249)
+	at org.eclipse.core.internal.events.BuildManager.getBuilder(BuildManager.java:546)
+	at org.eclipse.core.internal.events.BuildManager.getBuilder(BuildManager.java:574)
+	at org.eclipse.core.internal.events.BuildManager.getRule(BuildManager.java:1124)
+	at org.eclipse.core.internal.resources.Project$1.run(Project.java:612)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2345)
+	at org.eclipse.core.internal.resources.Project.internalBuild(Project.java:597)
+	at org.eclipse.core.internal.resources.Project.build(Project.java:114)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.doFullIncrementalDebugBuild(ProjectHelper.java:1131)
+	at com.android.ide.eclipse.adt.internal.launch.LaunchConfigDelegate.launch(LaunchConfigDelegate.java:155)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:858)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:707)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1018)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1222)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+!SESSION 2014-10-29 20:45:33.811 -----------------------------------------------
+eclipse.buildId=4.3.2.M20140221-1700
+java.version=1.7.0_71
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY org.eclipse.core.resources 2 10035 2014-10-29 20:45:38.071
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
